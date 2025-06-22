@@ -1,0 +1,87 @@
+﻿bg_light_industry = {
+	parent_group = bg_manufacturing
+
+	lens = light_industry
+	
+	urbanization = 10
+	infrastructure_usage_per_level = 1
+}
+
+bg_heavy_industry = {
+	parent_group = bg_manufacturing
+
+	lens = heavy_industry
+	
+	urbanization = 10
+	infrastructure_usage_per_level = 1.5
+}
+
+bg_heavy_military_industry = {
+	parent_group = bg_heavy_industry
+		
+	urbanization = 10
+	infrastructure_usage_per_level = 3
+}
+
+bg_power = {
+	category = development
+	
+	lens = infrastructure	
+
+	always_possible = yes
+	
+	economy_of_scale = yes
+	
+	cash_reserves_max = 25000
+
+	should_auto_expand = { 
+		default_auto_expand_rule = yes
+	}
+	
+	economy_of_scale_ai_factor = 1.5
+	foreign_investment_ai_factor = 0.5
+
+	infrastructure_usage_per_level = 1
+	
+	urbanization = 5
+}
+
+bg_owner_buildings = {
+	parent_group = bg_urban_facilities
+	
+	min_productivity_to_hire = 10.0
+
+	category = urban
+
+	lens = trade
+
+	always_possible = yes
+	
+	can_use_slaves = yes
+
+	auto_place_buildings = yes
+
+	owns_other_buildings = yes
+	
+	always_self_owning = yes
+
+	ignores_productivity_when_hiring = yes
+
+	proportionality_limit = 1.0
+
+	economy_of_scale = no
+
+	default_building = building_financial_district
+
+	cash_reserves_max = 10000
+
+	urbanization = 1
+
+	infrastructure_usage_per_level = 0.1
+
+	fired_pops_become_radical = no
+
+	should_auto_expand = {
+		always = no
+	}
+}

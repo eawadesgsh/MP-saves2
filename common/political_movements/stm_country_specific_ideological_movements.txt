@@ -1,0 +1,224 @@
+﻿
+
+movement_prussian_militarism = {
+	category = movement_category_ideological
+	
+	ideology = ideology_prussian_militarist 
+	
+	character_ideologies = {
+		ideology_jingoist_leader
+	}
+	
+	creation_trigger = {
+		OR = {
+						owner = { c:PRU ?= this}
+						AND = {
+							owner = { c:NGF ?= this}
+							c:NGF ?= { was_formed_from = PRU }
+						}
+						AND = {
+							owner = { c:GER ?= this }
+							c:GER ?= { was_formed_from = PRU }
+						}
+					}
+		NOR = {
+			has_variable = monarchy_stamped_out_var
+			country_has_primary_culture = cu:polish
+			
+		}
+	}
+	creation_weight = {
+		value = 100
+	}	
+	on_created = {
+		add_movement_enthusiasm_modifier = yes
+	}
+	
+	character_support_trigger = {
+		OR = {
+			has_ideology = ideology:ideology_fascist
+			has_ideology = ideology:ideology_jingoist_leader
+			culture = cu:north_german
+			AND = {
+				law_stance = {
+					law = law_type:law_monarchy
+					value > neutral
+				}
+				law_stance = {
+					law = law_type:law_autocracy
+					value > neutral
+				}
+				culture = {
+			    is_primary_culture_of = root.owner
+		        }
+			}
+		}
+	}
+	character_support_weight = {
+		value = 200
+		if = {
+			limit = {
+				OR = {
+			   has_ideology = ideology:ideology_fascist
+			   has_ideology = ideology:ideology_jingoist_leader
+			}
+			}
+			multiply = {
+				value = 5
+			}
+		}
+	}
+	pop_support_trigger = {
+		NOT = {
+			is_pop_type = slaves
+		}
+		culture = { shares_heritage_and_other_trait_with_any_primary_culture = root.owner }
+	}
+
+	pop_support_factors = {
+		movement_support_high_literacy
+		movement_support_aristocrats
+		movement_support_shopkeepers
+		movement_support_officers
+		movement_support_bureaucrats
+		movement_support_soldiers
+		movement_support_peasants
+	}
+	
+	pop_support_weight = {
+		add = {
+			value = 5
+			desc = "POP_BASE_SUPPORT"
+		}
+
+		if = {
+			limit = {
+				strata = upper
+			}
+			if = {
+				limit = {
+					is_pop_type = aristocrats
+				}
+				add = {
+					value = 25
+					desc = "POP_ARISTOCRATS"
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				strata = middle
+			}
+			if = {
+				limit = {
+					is_pop_type = shopkeepers
+				}
+				add = {
+					value = 15
+					desc = "POP_SHOPKEEPERS"
+				}
+			}
+			else_if = {
+				limit = {
+					is_pop_type = bureaucrats
+				}
+				add = {
+					value = 10
+					desc = "POP_BUREAUCRATS"
+				}
+			}
+			else_if = {
+				limit = {
+					is_pop_type = officers
+				}
+				add = {
+					value = 50
+					desc = "POP_OFFICERS"
+				}
+			}
+			else = {
+				add = {
+					value = 10
+					desc = "MIDDLE_NO_ICON"
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				strata = lower
+			}
+			if = {
+				limit = {
+					is_pop_type = soldiers
+				}
+				add = {
+					value = 25
+					desc = "POP_SOLDIERS"
+				}
+			}
+			else_if = {
+				limit = {
+					is_pop_type = peasants
+				}
+				add = {
+					value = 5
+					desc = "POP_PEASANTS"
+				}
+			}
+			else = {
+				add = {
+					value = 10
+					desc = "LOWER_NO_ICON"
+				}
+			}
+		}
+
+		multiply = { # Illiterate pops participate at 1/10 the rate of fully literate pops [prussian military doctrine kept high amount of war-ready people usually with good literacy]
+			desc = "POP_LITERACY"
+			value = literacy_rate
+			add = 0.10
+		}
+	}
+
+	revolution = {
+		possible = {
+			political_movement_support >= 0.05
+		}	
+	
+		weight = {
+			value = 100
+		}
+	}
+
+	secession = {
+		possible = {
+			political_movement_support >= 0.05
+			scope:clout <= 0
+		}
+		
+		weight = {
+			value = 1000
+		}		
+	}	
+
+	additional_radicalism_factors = {
+		if = {
+			limit = {
+				owner ?= {
+					has_law = law_type:law_monarchy
+					ruler ?= {
+						NOR = {
+							has_ideology = ideology:ideology_jingoist_leader
+							is_interest_group_type = ig_armed_forces
+						}
+						
+					}
+				}
+			}
+			add = {
+				value = 0.25
+				desc = "NON_JINGOIST_MONARCH"
+			}
+		}		
+	}	
+}

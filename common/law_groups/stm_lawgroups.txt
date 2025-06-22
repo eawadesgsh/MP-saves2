@@ -1,0 +1,3 @@
+lawgroup_crowns = {
+	law_group_category = power_structure
+}

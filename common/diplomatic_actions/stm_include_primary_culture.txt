@@ -1,0 +1,85 @@
+﻿# *Partially* derived from source material in: Koa's Change Subject Culture
+
+include_primary_culture = {
+	groups= {
+		overlord
+	}
+	
+	requires_approval = no
+	should_notify_third_parties = no
+	
+	texture = "gfx/interface/icons/diplomatic_action_icons/da_appoint_colonial_governor.dds"
+	confirmation_sound = "event:/SFX/UI/MapInteraction/SubjectInteractions/diplomatic_action_subjects_04_appoint_governor_benign"
+	
+	unlocking_technologies = {
+		colonization
+	}
+	
+	potential = {
+		NOT = { is_country_type = decentralized }
+		scope:target_country = {
+			NOT = { is_country_type = decentralized }
+			OR = {
+				is_subject_type = subject_type_colony
+				is_subject_type = subject_type_puppet
+			}
+		}
+		NOT = {
+			any_primary_culture = { is_primary_culture_of = scope:target_country }
+		}
+		is_player = yes
+	}
+	
+	possible = {
+		is_revolutionary = no
+		in_default = no
+		NOT = { has_war_with = scope:target_country }
+		scope:target_country.relations:root > relations_threshold:cordial
+		has_diplomatic_relevance = scope:target_country
+	}
+	
+	accept_effect = {
+		ordered_primary_culture = {
+            position = 0
+            save_scope_as = p_primary_culture
+        }
+		ordered_primary_culture = {
+            position = 1
+            save_scope_as = s_primary_culture
+        }ordered_primary_culture = {
+            position = 2
+            save_scope_as = t_primary_culture
+        }
+		ordered_primary_culture = {
+            position = 3
+            save_scope_as = tt_primary_culture
+        }
+		ordered_primary_culture = {
+            position = 4
+            save_scope_as = f_primary_culture
+        }
+		ordered_primary_culture = {
+            position = 5
+            save_scope_as = ss_primary_culture
+        }
+		ordered_primary_culture = {
+            position = 6
+            save_scope_as = sss_primary_culture
+        }
+		ordered_primary_culture = {
+            position = 7
+            save_scope_as = e_primary_culture
+        }
+		scope:target_country = {
+			add_primary_culture = scope:p_primary_culture
+			add_primary_culture = scope:s_primary_culture 
+			add_primary_culture = scope:t_primary_culture
+			add_primary_culture = scope:tt_primary_culture
+			add_primary_culture = scope:f_primary_culture
+			add_primary_culture = scope:ss_primary_culture
+			add_primary_culture = scope:sss_primary_culture
+			add_primary_culture = scope:e_primary_culture
+		}
+	}
+}
+
